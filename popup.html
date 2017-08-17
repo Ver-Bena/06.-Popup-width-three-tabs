@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>
+  <meta name="description" content="메일, 문자, 팩스등 구분없이 발송된 내역을 확인할수 있으며 전체가 표시되며 검색을 통해서 기간을 설정하여 내용을 영구보관하거나 삭제를 할수 있습니다.">
+  <meta name="keyword" content="대량발송, 대량문자, 대량메일, 대량메일솔루션, 메일러, 설문조사, 편리한UI, 다음 편집기, 문자10원, 메일 5원, 국내단일최저가, DB연동제공, 단일최저 가격제메일/문자 한번에 관리가능  ">
+  <meta charset="utf-8">
+  <meta name="Keywords" content="SMS, Email, 마케팅, 고객관리, 문자발송, 대량 이메일, DirectSend, 080무료거부 ARS제공">
+  <meta name="Description" content="SMS,Email 한곳에 모은 통합 마케팅 지원">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+
+  <link rel="shortcut icon" type="image/x-icon" href="http://223.130.121.103/mlk0113/images/favicon.ico">
+  <link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/bootstrap_custom.css">
+  <link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/style.css">
+  <link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/font-awesome.min.css">
+   <!--[if lt IE 9]>
+  <link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/style.css">
+  <![endif]-->
+
+  <!--[if lt IE 9]>
+  <script>
+  alert('DirectSend는 공식적으로 IE 9 부터 지원합니다. \nIE8에서 DirectSend를 사용하실 경우 문제가 발생 할 수 있습니다.');
+  </script>
+  <![endif]-->
+
+  <script async="" src="https://connect.facebook.net/en_US/fbevents.js&amp;#39;"></script><script type="text/javascript" async="" src="http://www.google-analytics.com/plugins/ua/linkid.js"></script><script async="" src="//fs.bizspring.net/fs4/logger.v4.1.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script async="" src="//fs.bizspring.net/fs4/bstrk.1.js"></script><script src="http://223.130.121.103/mlk0113/js/jquery-2.2.3.min.js"></script>
+  <script src="http://223.130.121.103/mlk0113/js/bootstrap.min.js"></script>
+  <script src="http://223.130.121.103/mlk0113/js/common.js"></script>
+  <script type="text/javascript" src="http://223.130.121.103/mlk0113/js/jquery.modal.js"></script>
+  <script type="text/javascript" src="http://223.130.121.103/mlk0113/js/SmoothScroll.js"></script>
+  <script src="https://use.fontawesome.com/b81d9ff00c.js"></script>
+
+  <script type="text/javascript">
+
+  var js_site_url = function( urlText ){
+   	var urlTmp = "http://223.130.121.103/mlk0113/" + urlText + "";
+   	return urlTmp;
+  }
+  </script>
+
+  <script>
+  $(document).ready(function() {
+      $(".numberonly").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A
+              (e.keyCode == 65 && e.ctrlKey === true) ||
+              // Allow: home, end, left, right
+              (e.keyCode >= 35 && e.keyCode <= 39)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+      });
+
+
+  $(".alphanumeric").keydown(function (e) {
+          // Allow: backspace, delete, tab, escape, enter and .
+          if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+              // Allow: Ctrl+A
+              (e.keyCode == 65 && e.ctrlKey === true) ||
+              // Allow: home, end, left, right
+              (e.keyCode >= 35 && e.keyCode <= 39)) {
+                  // let it happen, don't do anything
+                  return;
+          }
+          if ((e.keyCode >= 65 && e.keyCode <= 90)){
+          return;
+          }
+          //(e.keyCode>47 && e.keyCode<58) || (e.keyCode>64 && e.keyCode<91) || (e.keyCode>96 && cc<123))
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+              e.preventDefault();
+          }
+      });
+
+
+  });
+
+  function check_email(email) {
+  	var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+      return pattern.test(email);
+  }
+
+  function check_mobile(mobile) {
+  	var pattern = new RegExp(/^\d{3}\d{3,4}\d{4}$/);
+  	return pattern.test(mobile);
+  }
+
+  </script>
+
+  <!--<div class="overlay"></div>
+  <a href="#renewal_help" type="button" id="renewal_modal" class="helpmodal"></a>
+  <div id="renewal_help" class="modal" style="width:100%;height:800px">
+  	<div class="modal_body">
+  			</div>
+  </div>--><!-- /.modal -->
+
+  <!-- Google Tag Manager  // 201228 : 404 에러로 인해 주석처리 -->
+  <!--script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','921867830');</script-->
+  <!-- End Google Tag Manager -->
+  <script type="text/javascript" src="http://223.130.121.103/mlk0113/js/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="http://223.130.121.103/mlk0113/css/jquery-ui.min.css">
+	<script type="text/javascript" src="http://223.130.121.103/mlk0113/js/angular/angular.min.js"></script>
+	<script type="text/javascript" src="http://223.130.121.103/mlk0113/js/angular/ui-bootstrap-tpls-0.11.2.js"></script>
+	<script type="text/javascript" src="http://223.130.121.103/mlk0113/js/module/mailnara_module.js"></script>
+
+	<script type="text/javascript">
+	//<![CDATA[
+	//결과리포트 상세보기
+
+	function fn_reportView(v) {
+		var pt = $(window).height() / 2 - 800 / 2;
+		var pl = $(window).width() / 2 - 970 / 2;
+		window.open(v + '_report_view.html', '', 'top=' + pt + ',left=' + pl + ',width=970,height=800,toolbars=no,scrolling=yes,scrollbars=yes');
+	}
+
+	//상세검색
+	function fn_srch(){
+	  	if($('.vh_srch').is(':hidden')){
+			$('.fn_srch_btn').children('.fa').removeClass('fa-caret-down');
+			$('.fn_srch_btn').children('.fa').addClass('fa-caret-up');
+		}else{
+			$('.fn_srch_btn').children('.fa').removeClass('fa-caret-up');
+			$('.fn_srch_btn').children('.fa').addClass('fa-caret-down');
+		}
+		$('.vh_srch').slideToggle(100);
+	}
+
+	/*
+	// 메시지 미리보기
+	  function fn_prev(v){
+			$("span.mini_pop").fadeOut(50);
+			 $("span.sms_cont_"+v).fadeIn(50);
+		 }
+
+	$(document).ready(function() {
+		$("body").click(function(){
+			 $("span.mini_pop").fadeOut(50);
+		});
+	});
+
+	*/
+
+	//기간 검색 직접입력버튼
+	function fn_term(v){
+		if ( v == 'user') {
+			$(".datepicker").attr('disabled',false)
+		} else {
+			$(".datepicker").attr('disabled',true)
+		}
+	}
+
+	function fn_save(){
+		if(confirm('영구보관은 1건당 500포인트 차감됩니다. ')) {
+		}
+	}
+
+	$(document).ready(function(){
+		jQuery(function($){
+		  $.datepicker.regional['ko'] = {
+				closeText: '닫기',
+				prevText: '이전달',
+				nextText: '다음달',
+				currentText: '오늘',
+				monthNames: ['1월','2월','3월','4월','5월','6월',
+				'7월','8월','9월','10월','11월','12월'],
+				monthNamesShort: ['1월','2월','3월','4월','5월','6월',
+				'7월','8월','9월','10월','11월','12월'],
+				dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+				dayNamesShort: ['일','월','화','수','목','금','토'],
+				dayNamesMin: ['일','월','화','수','목','금','토'],
+				weekHeader: 'Wk',
+				dateFormat: 'yy-mm-dd',
+				firstDay: 0,
+				isRTL: false,
+				showMonthAfterYear: true,
+				yearSuffix: '년'};
+			$.datepicker.setDefaults($.datepicker.regional['ko']);
+		});
+
+		$(function() {
+		  $( ".datepicker" ).datepicker({maxDate :0, minDate : -90});
+		});
+
+		$(".modalLink").on("click", function() {
+			alert();
+		});
+
+	  })
+	//]]>
+	</script>
+
+  <title>대량발송전문DirectSend=발송내역, 국내 단일최저가, 문자10원, 메일5원, 이메일마케팅은 DirectSend</title>
+  <style type="text/css">/* This is not a zero-length file! */</style>
+  <style type="text/css">/* This is not a zero-length file! */</style>
+  <style>
+    .infoBox .nav-tabs {
+      width: 100%;
+      position: absolute;
+      left: -1px; bottom: 100%;
+    }
+
+    .infoBox .info {
+      height: 100%;
+      border-bottom: 0;
+    }
+
+    .infoBox .nav-tabs > li {
+      width: 33.33%;
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    /* 비활성화된 탭 */
+    .infoBox .nav-tabs > li > a {
+      font-size: 15px;
+      text-align: center;
+      line-height: 52px;
+      margin-right: -1px;
+      padding: 0 15px;
+      background-color; #fafafa;
+    }
+
+    /* 아이콘 가운데 정렬/여백 */
+    .infoBox .nav-tabs li i, .infoBox .nav-tabs li span {
+      display: inline-table;
+      vertical-align:middle;
+    }
+
+    .infoBox .nav-tabs li i {
+      margin-right: 2px;
+    }
+
+    .box-wrap { margin-top: 60px; position: relative; overflow: visible; }
+
+    /* 탭의 내용(content) 부분 */
+    .browser-tab {
+      width: 100%;
+      background: #fff;
+      min-height: 620px;
+      box-sizing: border-box;
+      padding: 20px;
+      padding-top: 0;
+      position: absolute;
+      top: -1px; left: 0;
+    }
+
+    .browser-tab img {
+      width: 100%;
+      border: 1px solid #ccc;
+    }
+
+    /* 탭이 비활성화(inactive) 되었을 때 아이콘 */
+    .infoBox .nav-tabs li .ie-icon {
+      display: inline-block;
+      width: 25px; height: 26px;
+      background: url(img/ie.png);
+    }
+
+    .infoBox .nav-tabs li .chrome-icon {
+      display: inline-block;
+      width: 25px; height: 25px;
+      background: url(img/chrome.png);
+    }
+
+    .infoBox .nav-tabs li .firefox-icon {
+      display: inline-block;
+      width: 26px; height: 25px;
+      background: url(img/firefox.png);
+    }
+
+    /* 탭이 활성화(active) 되었을 때 아이콘 */
+    .infoBox .nav-tabs li.active .ie-icon {
+      background: url(img/ie_active.png);
+    }
+
+    .infoBox .nav-tabs li.active .chrome-icon {
+      background: url(img/chrome_active.png);
+    }
+
+    .infoBox .nav-tabs li.active .firefox-icon {
+      background: url(img/firefox_active.png);
+    }
+
+    /* 본문 */
+    .process { margin: 20px 0; }
+
+    /* 순서&설명 */
+    #ie-tab .process li, #firefox-tab .process li {
+      float: left;
+    }
+
+    #ie-tab .process li:nth-child(1),
+    #firefox-tab .process li:nth-child(1) {
+      width: 20px; height: 20px;
+      color: #fff;
+      text-align: center;
+      font-size: 15px;
+      background: #f2483c;
+      border-radius: 100%;
+    }
+
+    #ie-tab .process li:nth-child(2),
+    #firefox-tab .process li:nth-child(2) {
+      width: 527px;
+      margin-left: 5px;
+      margin-top: 2px;
+    }
+
+    /* 버튼 */
+
+    .browser-tab .fa {
+      display: inline-block;
+      padding: 3px;
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="comfPopupBox">
+  	<h2>
+  		결제창 팝업차단해제
+  		<span class="closeBtn" onclick="popupClose('comfPopup');">닫기</span>
+  	</h2>
+
+  	<div class="infoBox">
+  		<div class="info">
+  			<p>결제창이 보이지 않는다면 사이트 창에 가려져 있지 않은지 확인하시거나 팝업 차단되었는지 확인해주시기 바랍니다.</p>
+        <div class="height_20"></div><!--gap-->
+        <div class="box-wrap">
+          <div class="pop_article">
+            <div class="tabs-style-2">
+              <ul class="nav nav-tabs no-margin-t" role="tablist">
+                <li class="active">
+                  <a href="#ie-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                    <i class="ie-icon"></i>
+                    <span>Internet Explorer</span>
+                  </a>
+                </li>
+
+                <li class="">
+                  <a href="#chrome-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                    <i class="chrome-icon"></i>
+                    <span>Chrome</span>
+                  </a>
+                </li>
+
+                <li class="">
+                  <a href="#firefox-tab" role="tab" data-toggle="tab" aria-expanded="true">
+                    <i class="firefox-icon"></i>
+                    <span>Firefox</span>
+                  </a>
+                </li>
+              </ul>
+
+              <div class="tab-content no-margin-b">
+                <div id="ie-tab" class="tab-pane fade in active browser-tab">
+                  <ul class="process clearfix">
+                    <li>1</li>
+                    <li>
+                      오른쪽 상단
+                      <i class="fa fa-cog" aria-hidden="true"></i>
+                      클릭 후 인터넷옵션에 들어가시면 “개인정보”의 팝업차단에서  팝업 차단 사용을 체크 해제하시면 정상적으로 결제창이 표시 됩니다.
+                    </li>
+                  </ul>
+
+                  <img src="img/explorer1.png" class="ie1" />
+
+                  <ul class="process clearfix">
+                    <li>2</li>
+                    <li>
+                      상단메뉴 “도구 > 팝업차단 > 팝업차단끄기를 클릭하시면 정상적으로 결제창이 표시됩니다.
+                    </li>
+                  </ul>
+
+                  <img src="img/explorer2.png" />
+                </div>
+
+                <div id="chrome-tab" class="tab-pane fade browser-tab">
+                  <p class="process">
+                    오른쪽 상단
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+                    클릭 후 설정에 들어가 하단의 “고급설정표시”를 클릭하면 “개인정보”에서 콘텐츠설정을 클릭하면 모든 사이트에서 팝업 표시 허용을 체크하면 정상적으로 결제창이 표시 됩니다.
+                  </p>
+
+                  <img src="img/chrome1.png" />
+                </div>
+
+                <div id="firefox-tab" class="tab-pane fade browser-tab">
+                  <ul class="process clearfix">
+                    <li>1</li>
+                    <li>
+                      오른쪽 상단
+                      <i class="fa fa-bars" aria-hidden="true"></i>
+                      클릭 후 설정에 들어가시면 “내용”의 파업창차단에서 팝업창 차단을 체크 해제하시면 정상적으로 결제창이 표시 됩니다.
+                    </li>
+                  </ul>
+
+                  <ul class="process clearfix">
+                    <li>2</li>
+                    <li>
+                      상단메뉴 “도구 > 설정 > 팝업차단끄기를 클릭하시면 정상적으로 결제창이 표시됩니다.
+                    </li>
+                  </ul>
+
+                  <img src="img/firefox1.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="foot_btns">
+        <button type="button" class="btn_red4" onclick="pop_quotation()" data-dismiss="modal">창닫기</button>
+      </div>
+  	</div>
+  </div>
+</body>
+
+</html>
